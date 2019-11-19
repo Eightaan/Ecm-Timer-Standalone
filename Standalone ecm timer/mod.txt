@@ -1,7 +1,7 @@
 {
 	"name" : "ECM Timer Standalone",
 	"description" : "Display a timer for active ecms.",
-	"author" : "LazyOzzy, Eightan",
+	"author" : "LazyOzzy, Eightan test",
 	"version" : "1",
 	"blt_version" : 2,
 	"color" : "0.15 0.15 0.15",

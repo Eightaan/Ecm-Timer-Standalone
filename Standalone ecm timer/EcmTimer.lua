@@ -1,5 +1,4 @@
 if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
- -- test
 HUDECMCounter = HUDECMCounter or class()
 
 	function HUDECMCounter:init(hud)

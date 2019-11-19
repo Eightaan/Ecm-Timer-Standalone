@@ -110,5 +110,3 @@ elseif string.lower(RequiredScript) == "lib/units/equipment/ecm_jammer/ecmjammer
 		end
 	end	
 end
-
--- test hey

@@ -1,0 +1,37 @@
+{
+    "infoboxes" : true,
+	"hide_hudbox" : false,
+	"animate_low" : true,
+	"pager_jam" : true,
+	"ECMText" :
+	{
+		"r" : 255,
+		"g" : 255,
+		"b" : 255
+	},
+	"ecm_low" :
+	{
+		"r" : 255,
+		"g" : 102,
+		"b" : 102
+	},
+	"ecm_mid" :
+	{
+		"r" : 255,
+		"g" : 204,
+		"b" : 102
+	},
+	"ECMIcon" :
+	{
+		"r" : 255,
+		"g" : 255,
+		"b" : 255
+	},
+	"ECMUpgradeIcon" :
+	{
+		"r" : 255,
+		"g" : 255,
+		"b" : 255
+	},
+	"pocket_ecm" : true
+}

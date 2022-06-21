@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<assets base_path="assets/" load="startup">
+    <group name="guis/textures/pd2_mod_ECM_Timer_v2/" path="assets/guis/textures/pd2_mod_ECM_Timer_v2/">
+		<file :name="check_bg.texture"     :path="check_bg.texture"/>
+		<file :name="check.texture"        :path="check.texture"/>
+    </group>
+</assets>

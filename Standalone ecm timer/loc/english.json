@@ -1,0 +1,36 @@
+{
+
+
+	"ECM_Timer_v2_r" : "Red",
+	"ECM_Timer_v2_g" : "Green",
+	"ECM_Timer_v2_b" : "Blue",
+	"ECM_Timer_v2_ok" : "Ok",
+	"ECM_Timer_v2_color_reset" : "Reset Color",
+	"ECM_Timer_v2_warning_desc" : "Some of your changes may not take effect until the next heist.",
+
+	"ECM_Timer_v2_title" : "ECM Timer",
+	"ECM_Timer_v2_desc" : "ECM Timer options",
+
+	"hide_hudbox_title" : "Hide Corners/Background",
+	"hide_hudbox_desc" : "Hides the white corners and black background for the ecm timer.",
+
+	
+
+	"infoboxes_title" : "ECM Timer",
+	"infoboxes_desc" : "Enable an ECM timer in stealth.",
+	"pager_jam_title" : "Upgraded ECM Icon",
+	"pager_jam_desc" : "Displays an icon on the ecm timer when it blocks pagers.",
+	"animate_low_title" : "Animate when low",
+	"animate_low_desc" : "Animates the timer text when the remaining time is past 3 seconds.",
+	"pocket_ecm_title" : "Display Pocket ecm",
+    "pocket_ecm_desc" : "Also displays when pocket ecms are active.",	
+
+	"ECM_Timer_v2OptionsButtonTitleID" : "Hotline Miami Hud Color Options",
+	"ECM_Timer_v2OptionsButtonDescID" : "Change the color of this HUD element to your own liking.",
+	"ECM_Timer_v2ColorOption" : "Change the color of this HUD element to your own liking.",
+	"ECM_Timer_v2ECMUpgradeIconTitleID" : "ECM Upgrade Icon",
+	"ECM_Timer_v2ECMIconTitleID" : "ECM Timer Icon",
+	"ECM_Timer_v2ECMTextTitleID" : "ECM Remaining Time",
+	"ECM_Timer_v2EcmMidTitleID" : "ECM Remaining Time (Medium)",
+	"ECM_Timer_v2EcmLowTitleID" : "ECM Remaining Time (Low)"
+}

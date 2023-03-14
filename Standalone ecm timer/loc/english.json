@@ -18,8 +18,8 @@
 
 	"infoboxes_title" : "ECM Timer",
 	"infoboxes_desc" : "Enable an ECM timer in stealth.",
-	"pager_jam_title" : "Upgraded ECM Icon",
-	"pager_jam_desc" : "Displays an icon on the ecm timer when it blocks pagers.",
+	"pager_jam_title" : "Only Display Pager Blocking ECM Timers",
+	"pager_jam_desc" : "Hides ECM timers that don't block pagers.",
 	"animate_low_title" : "Animate when low",
 	"animate_low_desc" : "Animates the timer text when the remaining time is past 3 seconds.",
 	"pocket_ecm_title" : "Display Pocket ecm",
@@ -28,7 +28,6 @@
 	"ECM_Timer_v2OptionsButtonTitleID" : "Hotline Miami Hud Color Options",
 	"ECM_Timer_v2OptionsButtonDescID" : "Change the color of this HUD element to your own liking.",
 	"ECM_Timer_v2ColorOption" : "Change the color of this HUD element to your own liking.",
-	"ECM_Timer_v2ECMUpgradeIconTitleID" : "ECM Upgrade Icon",
 	"ECM_Timer_v2ECMIconTitleID" : "ECM Timer Icon",
 	"ECM_Timer_v2ECMTextTitleID" : "ECM Remaining Time",
 	"ECM_Timer_v2EcmMidTitleID" : "ECM Remaining Time (Medium)",

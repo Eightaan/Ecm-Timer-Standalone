@@ -27,11 +27,5 @@
 		"g" : 255,
 		"b" : 255
 	},
-	"ECMUpgradeIcon" :
-	{
-		"r" : 255,
-		"g" : 255,
-		"b" : 255
-	},
 	"pocket_ecm" : true
 }

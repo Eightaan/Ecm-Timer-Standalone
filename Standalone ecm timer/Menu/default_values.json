@@ -3,6 +3,8 @@
 	"hide_hudbox" : false,
 	"animate_low" : true,
 	"pager_jam" : true,
+	"chat_ecm" : false,
+	"low_time" : 5,
 	"ECMText" :
 	{
 		"r" : 255,
@@ -26,6 +28,12 @@
 		"r" : 255,
 		"g" : 255,
 		"b" : 255
+	},
+	"ecm_color" :
+	{
+		"r" : 9,
+		"g" : 177,
+		"b" : 219
 	},
 	"pocket_ecm" : true
 }

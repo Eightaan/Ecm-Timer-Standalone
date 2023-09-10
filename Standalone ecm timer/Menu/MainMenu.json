@@ -16,6 +16,31 @@
 		},
 		{
 			"type": "toggle",
+			"id": "chat_ecm_toggle",
+			"title": "chat_ecm_title",
+			"description": "chat_ecm_desc",
+			"callback": "SetOption",
+			"callback_arguments" : "chat_ecm",
+			"value": "chat_ecm",
+			"default_value": false,
+			"is_parent" : true
+		},
+		{
+			"type": "slider",
+			"id": "low_time_slider",
+			"title": "low_time_title",
+			"description": "low_time_desc",
+			"callback": "SetOption",
+			"callback_arguments": "low_time",
+			"value": "low_time",
+			"max": 20,
+            "min": 1,
+            "step": 1,
+            "default_value": 5,
+			"parent" : "chat_ecm_toggle"
+		},
+		{
+			"type": "toggle",
 			"id": "pager_jam_toggle",
 			"title": "pager_jam_title",
 			"description": "pager_jam_desc",
@@ -97,6 +122,17 @@
 			"callback": "SetColorOption",
 			"callback_arguments": "ECMIcon",
 			"parent" : "infoboxes_toggle"
+		},
+		{
+			"type": "color_select",
+            "id": "ecm_color_color_select",
+            "title": "ECM_Timer_v2EcmColorTitleID",
+            "description": "ECM_Timer_v2ColorOption",
+            "value": "ecm_color",
+            "default_value": [9, 177, 219],
+            "callback": "SetColorOption",
+            "callback_arguments": "ecm_color",
+			"parent" : "chat_ecm_toggle"
 		},
 		{
 			"type": "toggle",

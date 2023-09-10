@@ -665,7 +665,7 @@ function ECM_Timer_v2Menu:Cancel()
         self:CloseColorMenu(false)
     elseif self._input then
         self:CloseInput()
-    elseif self._open_menu.parent_menu then
+    elseif self._open_menu and self._open_menu.parent_menu then
         self:OpenMenu(self._open_menu.parent_menu, true)
     else
         self:Close()

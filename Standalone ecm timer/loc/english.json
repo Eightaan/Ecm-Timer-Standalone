@@ -1,6 +1,4 @@
 {
-
-
 	"ECM_Timer_v2_r" : "Red",
 	"ECM_Timer_v2_g" : "Green",
 	"ECM_Timer_v2_b" : "Blue",
@@ -14,22 +12,26 @@
 	"hide_hudbox_title" : "Hide Corners/Background",
 	"hide_hudbox_desc" : "Hides the white corners and black background for the ecm timer.",
 
-	
-
 	"infoboxes_title" : "ECM Timer",
 	"infoboxes_desc" : "Enable an ECM timer in stealth.",
-	"pager_jam_title" : "Only Display Pager Blocking ECM Timers",
-	"pager_jam_desc" : "Hides ECM timers that don't block pagers.",
-	"animate_low_title" : "Animate when low",
+	"pager_jam_title" : "Only Display ECM Timers With Pager Delay",
+	"pager_jam_desc" : "Hides ECM timers that don't delay pagers.",
+	"animate_low_title" : "Animate When Low",
 	"animate_low_desc" : "Animates the timer text when the remaining time is past 3 seconds.",
-	"pocket_ecm_title" : "Display Pocket ecm",
+	"pocket_ecm_title" : "Display Pocket ECM",
     "pocket_ecm_desc" : "Also displays when pocket ecms are active.",	
 
-	"ECM_Timer_v2OptionsButtonTitleID" : "Hotline Miami Hud Color Options",
-	"ECM_Timer_v2OptionsButtonDescID" : "Change the color of this HUD element to your own liking.",
 	"ECM_Timer_v2ColorOption" : "Change the color of this HUD element to your own liking.",
 	"ECM_Timer_v2ECMIconTitleID" : "ECM Timer Icon",
 	"ECM_Timer_v2ECMTextTitleID" : "ECM Remaining Time",
 	"ECM_Timer_v2EcmMidTitleID" : "ECM Remaining Time (Medium)",
-	"ECM_Timer_v2EcmLowTitleID" : "ECM Remaining Time (Low)"
+	"ECM_Timer_v2EcmLowTitleID" : "ECM Remaining Time (Low)",
+	"ECM_Timer_v2EcmColorTitleID" : "ECM Chat Color",
+	
+	"chat_ecm_title" : "Chat Notification",
+	"chat_ecm_desc" : "Sends a private chat message when the ECM is about to run out.",
+	"low_time_title" : "Low time",
+	"low_time_desc" : "Display the message when this number of seconds left",
+	"ECM_Timer_v2ChatTitle" : "ECM",
+	"ECM_Timer_v2ChatText" : " seconds left"
 }

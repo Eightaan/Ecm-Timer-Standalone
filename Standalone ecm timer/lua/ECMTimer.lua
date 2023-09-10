@@ -6,7 +6,7 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 	    self._hud_panel = hud.panel
 	    self._ecm_panel = self._hud_panel:panel({
 		    name = "ecm_counter_panel",
-			alpha = ECM_Timer_v2:GetOption("infoboxes") or 0,
+			alpha =	1,
 		    visible = false,
 		    w = 200,
 		    h = 200
@@ -55,7 +55,7 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
     function HUDECMCounter:update()
 		local current_time = TimerManager:game():time()
 		local t = self._ecm_timer - current_time
-		if managers.groupai:state():whisper_mode() then
+		if managers.groupai and managers.groupai:state():whisper_mode() then
 			self._ecm_panel:set_visible(t > 0)
 			if t > 0.1 then
 			    local t_format = t < 10 and "%.1fs" or "%.fs"
@@ -96,6 +96,30 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 	end)
 
 elseif RequiredScript == "lib/units/equipment/ecm_jammer/ecmjammerbase" then
+	-- ECM in chat
+	local counter = 0
+	
+	Hooks:PostHook(ECMJammerBase, "init", "ets_ECMJammerBase_init", function (self, ...)
+		counter = counter + 1
+	end)
+	
+	Hooks:PostHook(ECMJammerBase, "update", "ets_ECMJammerBase_update", function (self, ...)
+		local low_time = ECM_Timer_v2:GetOption("low_time") or 5
+		local stealth = managers.groupai and managers.groupai:state():whisper_mode()
+		if self:active() and not self.notified and self._battery_life and self._battery_life < low_time and managers.chat and stealth and ECM_Timer_v2:GetOption("chat_ecm") then
+			local ecm_color = ECM_Timer_v2:GetColor("ecm_color") or Color("09b1db")
+			self.notified = true
+			counter = counter - 1
+			if counter == 0 then
+				local peer = managers.network and managers.network:session() or nil
+				peer = peer and peer:local_peer() or nil
+				if peer then
+					managers.chat:_receive_message(1, managers.localization:text("ECM_Timer_v2ChatTitle"), low_time..managers.localization:text("ECM_Timer_v2ChatText"), ecm_color)
+				end
+			end
+		end
+	end)
+	
 	--PeerID
 	local original =
 	{
@@ -136,7 +160,7 @@ elseif RequiredScript == "lib/units/equipment/ecm_jammer/ecmjammerbase" then
 	local set_active_original = ECMJammerBase.set_active
 	function ECMJammerBase:set_active(active, ...)
     set_active_original(self, active, ...)
-		if active then
+		if active and ECM_Timer_v2:GetOption("infoboxes") then
 		    local battery_life = self:battery_life()
             if battery_life == 0 then
                 return
@@ -151,6 +175,7 @@ elseif RequiredScript == "lib/units/equipment/ecm_jammer/ecmjammerbase" then
 					jam_pagers = peer._unit:base():upgrade_value("ecm_jammer", "affects_pagers")
 				end
 			end
+
 			if jam_pagers or not ECM_Timer_v2:GetOption("pager_jam") then
 				managers.hud._hud_ecm_counter._ecm_timer = ecm_timer
 			else
@@ -163,7 +188,7 @@ elseif RequiredScript == "lib/units/beings/player/playerinventory" then
 	-- Pocket ECM
 	Hooks:PostHook(PlayerInventory, "_start_jammer_effect", "ets_PlayerInventory__start_jammer_effect", function(self, end_time)
 		local ecm_timer = end_time or TimerManager:game():time() + self:get_jammer_time()
-		if ECM_Timer_v2:GetOption("pocket_ecm") and ecm_timer > managers.hud._hud_ecm_counter._ecm_timer then
+		if ECM_Timer_v2:GetOption("infoboxes") and ECM_Timer_v2:GetOption("pocket_ecm") and ecm_timer > managers.hud._hud_ecm_counter._ecm_timer then
 			managers.hud._hud_ecm_counter._ecm_timer = ecm_timer
 		end
 	end)

@@ -30,8 +30,8 @@
 	
 	"chat_ecm_title" : "Chat Notification",
 	"chat_ecm_desc" : "Sends a private chat message when the ECM is about to run out.",
-	"low_time_title" : "Low time",
-	"low_time_desc" : "Display the message when this number of seconds left",
+	"low_time_title" : "Chat Message Threshold",
+	"low_time_desc" : "Threshold for how many seconds will remain when a message is sent about low battery.",
 	"ECM_Timer_v2ChatTitle" : "ECM",
 	"ECM_Timer_v2ChatText" : " seconds left"
 }

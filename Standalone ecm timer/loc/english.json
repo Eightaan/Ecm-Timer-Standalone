@@ -1,10 +1,8 @@
 {
-	"ECM_Timer_v2_r" : "Red",
-	"ECM_Timer_v2_g" : "Green",
-	"ECM_Timer_v2_b" : "Blue",
-	"ECM_Timer_v2_ok" : "Ok",
+	"ECM_Timer_v2_color_red" : "Red",
+	"ECM_Timer_v2_color_green" : "Green",
+	"ECM_Timer_v2_color_blue" : "Blue",
 	"ECM_Timer_v2_color_reset" : "Reset Color",
-	"ECM_Timer_v2_warning_desc" : "Some of your changes may not take effect until the next heist.",
 
 	"ECM_Timer_v2_title" : "ECM Timer",
 	"ECM_Timer_v2_desc" : "ECM Timer options",

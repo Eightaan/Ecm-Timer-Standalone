@@ -1,3 +1,12 @@
+--[[
+	Original code by Dom
+
+	Copy of BLT's MenuHelper with BTP specific changes witch ECM_Timer_v2 changes
+	Loads a json-formatted text file and automatically parses and converts into a usable menu
+	@param content table Path of the file to load and convert into a menu
+	@param data_table table? Table containing the data keys which various menu items can load their value from
+]]
+
 local function check_value(compare, value, type)
     if type == "toggle" then
         value = value == "on"
@@ -223,30 +232,9 @@ local function CreateMenuFromJson(content, data_table)
                 if item.child_compare then
                     menu_item:set_parameter("child_compare", item.child_compare)
                 end
-				-- Added support for multiple parents
-				if item.parent then
-					menu_item:set_parameter("parent", item.parent)
-				end
-				if item.parent then
-					if type(item.parent) == "table" then
-						local enabled = true
-
-						for _, parent_id in ipairs(item.parent) do
-							local parent = previous_items[parent_id]
-
-							if not parent or not parent:enabled() or parent:value() ~= "on" then
-								enabled = false
-								break
-							end
-						end
-
-						menu_item:set_enabled(enabled)
-					elseif previous_items[item.parent] then
-						local parent = previous_items[item.parent]
-						menu_item:set_enabled(parent:enabled() and parent:value() == "on")
-					end
-				end
-				-----------------------------------------------
+				if item.parent and previous_items[item.parent] then
+                    menu_item:set_enabled(previous_items[item.parent]:value() == "on")
+                end
                 if item.parent_compare and item.parent_compare.id and previous_items[item.parent_compare.id] then
                     local data = item.parent_compare
                     local parent = previous_items[data.id]
@@ -304,18 +292,15 @@ end
 
 ---@param item MenuItemMultiChoice|CoreMenuItemSlider.ItemSlider|CoreMenuItemToggle.ItemToggle
 function MenuCallbackHandler:ECM_Timer_v2_set_item_value(item)
-	-- Added support for multiple parents
-    local params = item:parameters()
-	local item_type = item:type()
+    local params, type = item:parameters(), item:type()
     local value
-    if item_type  == "slider" then ---@cast item CoreMenuItemSlider.ItemSlider
+    if type == "slider" then ---@cast item CoreMenuItemSlider.ItemSlider
         value = tonumber(item:raw_value_string())
-    elseif item_type  == "toggle" then ---@cast item CoreMenuItemToggle.ItemToggle
+    elseif type == "toggle" then ---@cast item CoreMenuItemToggle.ItemToggle
         value = item:value() == "on"
     else ---@cast item MenuItemMultiChoice
         value = item:value()
     end
-	-------------------------------------------
     local settings_table = ECM_Timer_v2._data
     if params.setting then
         settings_table = settings_table[params.setting]
@@ -332,49 +317,14 @@ function MenuCallbackHandler:ECM_Timer_v2_set_item_value(item)
                 break
             end
         end
-		-- Added support for multiple parents
-		elseif params.children then
-			local children = table.list_to_set(params.children)
-
-			for _, row_item in ipairs(params.gui_node.row_items) do
-				if children[row_item.name] then
-					local child_params = row_item.item:parameters()
-					local enabled = value
-
-					if child_params.parent then
-						if type(child_params.parent) == "table" then
-							enabled = true
-
-							for _, parent_id in ipairs(child_params.parent) do
-								local parent_item
-
-								for _, parent_row in ipairs(params.gui_node.row_items) do
-									if parent_row.name == parent_id then
-										parent_item = parent_row.item
-										break
-									end
-								end
-
-								if not parent_item or not parent_item:enabled() or parent_item:value() ~= "on" then
-									enabled = false
-									break
-								end
-							end
-						else
-							for _, parent_row in ipairs(params.gui_node.row_items) do
-								if parent_row.name == child_params.parent then
-									enabled = parent_row.item:enabled() and parent_row.item:value() == "on"
-									break
-								end
-							end
-						end
-					end
-
-					row_item.item:set_enabled(enabled)
-				end
-			end
-		end
-		-------------------------------------------------------------------------
+    elseif params.children then
+        local children = table.list_to_set(params.children)
+        for _, row_item in ipairs(params.gui_node.row_items) do
+            if children[row_item.name] then
+                row_item.item:set_enabled(value)
+            end
+        end
+    end
 	if params.child_compare then
         local compare = params.child_compare
         for _, row_item in ipairs(params.gui_node.row_items) do
@@ -412,7 +362,6 @@ end
 
 Hooks:Add("MenuManagerInitialize", "MenuManagerInitialize_ECM_Timer_v2", function(menu_manager, nodes)
     LoadFromJsonFile(ECM_Timer_v2._menu_path .. "MainMenu.json", ECM_Timer_v2._data)
-	
 	local main_menu = menu_manager:get_menu(menu_manager._is_start_menu and "menu_main" or "menu_pause")
     if main_menu then
         local node = CoreMenuNode.MenuNode:new({

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<mod
+    name = "ECM Timer"
+    description = ""
+	author = "Eightan"
+	version = "1.7.1"
+	blt_version = "2"
+	color = "0.15 0.15 0.15"
+	image = "icon.png"
+>
+    <update
+        provider = "mws"
+        identifier = "26652"
+        patchnotes = "https://modworkshop.net/mod/26652?tab=changelog"
+    />
+	<hooks script_path="lua/">
+        <pre hook_id="core/lib/utils/coreapp" script_path="ECMCore.lua"/>
+        <group hook_id="lib/">
+            <group :hook_id="managers/">
+				<group :hook_id="menumanager">
+					<post script_path="ColorSelector.lua" />
+					<post script_path="ECMMenu.lua" />
+				</group>
+				<group :hook_id="hudmanagerpd2">
+					<post :script_path="ECMTimer.lua" />
+				</group>
+			</group>
+			<group :hook_id="units/">
+				<group :hook_id="equipment/ecm_jammer/ecmjammerbase">
+					<post :script_path="ECMTimer.lua"/>
+				</group>
+				<group :hook_id="beings/player/">
+					<post :hook_id="playerinventory" :script_path="ECMTimer.lua"/>
+				</group>
+			</group>
+		</group>
+    </hooks>
+</mod>

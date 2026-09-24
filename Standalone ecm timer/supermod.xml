@@ -18,8 +18,8 @@
         <group hook_id="lib/">
             <group :hook_id="managers/">
 				<group :hook_id="menumanager">
-					<post script_path="ECMMenu.lua" />
 					<post script_path="ColorSelector.lua" />
+					<post script_path="ECMMenu.lua" />
 				</group>
 				<group :hook_id="hudmanagerpd2">
 					<post :script_path="ECMTimer.lua" />

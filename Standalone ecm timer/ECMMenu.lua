@@ -1,7 +1,7 @@
 --[[
 	Original code by Dom
 
-	Copy of BLT's MenuHelper with BTP specific changes witch ECM_Timer_v2 changes
+	Copy of BLT's MenuHelper with BTP specific changes with ECM_Timer_v2 changes
 	Loads a json-formatted text file and automatically parses and converts into a usable menu
 	@param content table Path of the file to load and convert into a menu
 	@param data_table table? Table containing the data keys which various menu items can load their value from
@@ -360,20 +360,25 @@ function MenuCallbackHandler:ECM_Timer_v2_save(item)
     ECM_Timer_v2:Save()
 end
 
-Hooks:Add("MenuManagerInitialize", "MenuManagerInitialize_ECM_Timer_v2", function(menu_manager, nodes)
+Hooks:Add("MenuManagerInitialize", "MenuManagerInitialize_ECM_Timer_v2", function(menu_manager)
     LoadFromJsonFile(ECM_Timer_v2._menu_path .. "MainMenu.json", ECM_Timer_v2._data)
 	local main_menu = menu_manager:get_menu(menu_manager._is_start_menu and "menu_main" or "menu_pause")
-    if main_menu then
-        local node = CoreMenuNode.MenuNode:new({
-            gui_class = "ECM_Timer_v2MenuNodeCustomizeGadgetGui",
-            modifier = "ECM_Timer_v2MenuSetColorInitiator",
-            refresh = "ECM_Timer_v2MenuSetColorInitiator"
-        })
+	if main_menu then
+		if ECM_Timer_v2MenuSetColorInitiator and ECM_Timer_v2MenuNodeCustomizeGadgetGui then
+			local node = CoreMenuNode.MenuNode:new({
+				gui_class = "ECM_Timer_v2MenuNodeCustomizeGadgetGui",
+				modifier = "ECM_Timer_v2MenuSetColorInitiator",
+				refresh = "ECM_Timer_v2MenuSetColorInitiator"
+			})
 
-        node:set_callback_handler(MenuCallbackHandler:new())
-        main_menu.data._nodes.ECM_Timer_v2_color_select = node
+			node:set_callback_handler(MenuCallbackHandler:new())
+			main_menu.data._nodes.ECM_Timer_v2_color_select = node
+		else
+            log("[ECM_Timer_v2] ECM_Timer_v2MenuSetColorInitiator or ECM_Timer_v2MenuNodeCustomizeGadgetGui is Missing!")
+        end
     end
 end)
+
 
 Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInit_ECM_Timer_v2", function( loc )
 	local localization = ECM_Timer_v2._path .. "loc/"

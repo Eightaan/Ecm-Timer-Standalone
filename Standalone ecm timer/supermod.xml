@@ -3,7 +3,7 @@
     name = "ECM Timer"
     description = ""
 	author = "Eightan"
-	version = "1.7.0"
+	version = "1.7.1"
 	blt_version = "2"
 	color = "0.15 0.15 0.15"
 	image = "icon.png"

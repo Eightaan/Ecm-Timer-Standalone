@@ -53,7 +53,6 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 	    ecm_icon:set_center_y(ecm_box:h() / 2)
 		ecm_box:set_right(ecm_icon:left())
     end
-	
 
 	function EcmTimer:start_ecm_timer(end_time)
 		if not (managers.groupai and managers.groupai:state():whisper_mode()) or end_time <= self._ecm_timer then

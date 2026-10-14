@@ -54,13 +54,15 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 		ecm_box:set_right(ecm_icon:left())
     end
 	
+
 	function EcmTimer:start_ecm_timer(end_time)
-		if not (managers.groupai and managers.groupai:state():whisper_mode()) then
+		if not (managers.groupai and managers.groupai:state():whisper_mode()) or end_time <= self._ecm_timer then
 			return
 		end
+		local font = tweak_data.hud_corner.numhostages_size * 0.9
 		self._ecm_timer = end_time
-
 		self._text:stop()
+		self._text:set_font_size(font)
 		self._text:animate(function(o)
 			while alive(o) do
 				local t = self._ecm_timer - TimerManager:game():time()
@@ -69,12 +71,10 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 				self._ecm_panel:set_visible(t > 0.1 and is_stealth)
 				o:set_color(ECM_Timer_v2:GetColor("ECMText"))
 				o:set_text(string.format(t < 10 and "%.1fs" or "%.0fs", t))
-
 				if t < 3 then
 					o:set_color(ECM_Timer_v2:GetColor("ecm_low"))
 					if ECM_Timer_v2:GetOption("animate_low") then
 						local pulse = 1 - math.sin(t * 700)
-						local font = tweak_data.hud_corner.numhostages_size * 0.9
 						o:set_font_size(math.lerp(font, font * 1.05, pulse))
 					end
 				elseif t < 10 then
@@ -83,6 +83,7 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 
 				coroutine.yield()
 			end
+			self._ecm_panel:set_visible(false)
 		end)
 	end
 
@@ -135,6 +136,10 @@ elseif RequiredScript == "lib/units/equipment/ecm_jammer/ecmjammerbase" then
 		self:SetPeersID(self._owner_id or 0)
 	end)
 
+	Hooks:PostHook(ECMJammerBase, "load", "ets_ECMJammerBase_load", function(self, data, ...)
+		self:SetPeersID(data.ECMJammerBase.owner_id or 0)
+	end)
+
 	function ECMJammerBase:SetPeersID(peer_id)
 		local id = peer_id or 0
 		self._ets_peer_id = id
@@ -145,23 +150,27 @@ elseif RequiredScript == "lib/units/equipment/ecm_jammer/ecmjammerbase" then
 	Hooks:PostHook(ECMJammerBase, "set_active", "ets_ECMJammerBase_set_active", function(self, active, ...)
 		if active and ECM_Timer_v2:GetOption("infoboxes") then
 			local battery_life = self:battery_life()
-			if battery_life == 0 then
+			if battery_life <= 0 then
 				return
 			end
-			local jam_pagers = false
+
+			local peer_id = self._ets_peer_id
+			local jam_pagers = true
+
 			if self._ets_local_peer then
 				jam_pagers = managers.player:has_category_upgrade("ecm_jammer", "affects_pagers")
-			elseif self._ets_peer_id ~= 0 then
-				local peer = managers.network:session():peer(self._ets_peer_id)
-				if peer and peer._unit and peer._unit.base then
-					jam_pagers = peer._unit:base():upgrade_value("ecm_jammer", "affects_pagers")
+			elseif peer_id and peer_id ~= 0 then
+				local peer = managers.network:get_peer_safe(peer_id)
+				local unit = peer and peer._unit
+
+				if unit and alive(unit) and unit.base then
+					jam_pagers = unit:base():upgrade_value("ecm_jammer", "affects_pagers")
 				end
 			end
-			if jam_pagers or not ECM_Timer_v2:GetOption("pager_jam") then
+
+			if not ECM_Timer_v2:GetOption("pager_jam") or jam_pagers ~= false then
 				local end_time = TimerManager:game():time() + battery_life
 				managers.hud._hud_ecm_counter:start_ecm_timer(end_time)
-			else
-				return
 			end
 		end
 	end)
